@@ -3,104 +3,108 @@
 //  JsonRequest
 //
 //  Created by John Lima on 11/18/15.
-//  Copyright © 2015 John Lima. All rights reserved.
+//  Copyright © 2015 limadeveloper. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController {
 
-    // mark: properties
-    @IBOutlet var tableView: UITableView!
-    @IBOutlet var countries: UIBarButtonItem!
+    // Mark: - Properties
+    @IBOutlet fileprivate weak var tableView: UITableView!
+    @IBOutlet fileprivate weak var countButton: UIBarButtonItem!
     
-    var refreshControl = UIRefreshControl()
-    let app = UIApplication.sharedApplication()
+    fileprivate var refreshControl = UIRefreshControl()
+    fileprivate var model = Country()
+    fileprivate var tableData: Array<Country>?
+    fileprivate let cellName = "cell"
     
-    var tableData = NSArray()
-    
-    // mark: view lifecycle
+    // Mark: - View LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         getData()
-        setView()
-        createRefresh()
+        updateUI()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-
-    }
-
-    // mark: - actions
-    func setView() {
+    // Mark: - Actions
+    fileprivate func updateUI() {
         
-        countries.title = "\(numberOfCountries())"
+        countButton.title = "\((tableData ?? []).count)"
         
-        let back = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        let back = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = back
+        
+        let footer = UIView(frame: .zero)
+        tableView.tableFooterView = footer
+        tableView.backgroundColor = .white
+        tableView.reloadData()
     }
     
-    func getData() {
-        app.networkActivityIndicatorVisible = true
-        let json = JsonModel()
-        json.downloadJSONFromURL { (json) -> () in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.tableData = json!
-                print("table data: \(self.tableData)")
-                self.tableView.reloadData()
-                self.setView()
-                self.app.networkActivityIndicatorVisible = false
-            })
+    fileprivate func getData() {
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
+        model.downloadJSONFromURL { (countries, error) in
+            
+            guard let countries = countries, countries.count > 0 else { return }
+            self.tableData = countries
+            
+            DispatchQueue.main.async {
+                self.updateUI()
+                self.createRefresh()
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            }
         }
     }
     
-    func createRefresh() {
+    fileprivate func createRefresh() {
         refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: "refresh:", forControlEvents: .ValueChanged)
+        refreshControl.tintColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
         tableView.addSubview(refreshControl)
     }
     
-    func refresh(sender:AnyObject) {
+    dynamic fileprivate func refresh(sender: UIRefreshControl) {
         getData()
         tableView.reloadData()
         refreshControl.endRefreshing()
     }
-    
-    func numberOfCountries() -> Int {
-        var num = Int()
-        num = tableData.count
-        return num
+}
+
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (tableData ?? []).count
     }
     
-    // mark: - table view datasource
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableData.count
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-        cell.textLabel?.text = tableData.objectAtIndex(indexPath.row).valueForKey("name") as? String
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellName, for: indexPath)
+        
+        cell.textLabel?.text = tableData?[indexPath.row].name
+        
         return cell
     }
     
-    // mark: - table view delegate
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("index: \(indexPath.row)")
-        performSegueWithIdentifier("details", sender: indexPath.row)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        performSegue(withIdentifier: Segue.details, sender: indexPath)
     }
+}
 
-    // mark: - segue
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "details" {
-            let index = sender as! Int
-            let vc = segue.destinationViewController as! DetailViewController
-            vc.tableData = [tableData.objectAtIndex(index) as! NSDictionary]
+extension ViewController {
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let identifier = segue.identifier {
+            switch identifier {
+            case Segue.details:
+                guard let indexPath = sender as? IndexPath else { return }
+                let controller = segue.destination as? DetailViewController
+                controller?.country = tableData?[indexPath.row]
+            default:
+                break
+            }
         }
     }
 }
