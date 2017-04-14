@@ -1,4 +1,9 @@
-# Swift-JsonRequest
-# Swift 2.1
-# Xcode 7.1.1
-# iOS 7.1
+# Readme
+- The purpose of this tutorial is to show one of the best ways json request Api.
+
+## Swift
+- Swift 3.1
+- Xcode 8.3
+
+## Objective-C
+- Xcode 8.3
