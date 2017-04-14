@@ -1,5 +1,5 @@
 //
-//  JsonModel.swift
+//  Country.swift
 //  JsonRequest
 //
 //  Created by John Lima on 11/18/15.
