@@ -39,7 +39,17 @@
 
 -(void)downloadJSONFromURLWith:(void (^)(NSArray *, NSString *))completion {
 
+    NSURL *url = [[NSURL alloc] initWithString: API_COUNTRIES];
+    NSURLSession *session = [[NSURLSession alloc] init];
     
+    [session dataTaskWithURL: url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData: data options: NSJSONReadingMutableContainers error: &error];
+        
+        if (jsonArray.count > 0) {
+            NSLog(@"JSON: %@", jsonArray);
+        }
+    }];
 }
 
 @end
