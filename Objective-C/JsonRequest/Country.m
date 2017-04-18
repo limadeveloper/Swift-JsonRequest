@@ -24,7 +24,10 @@
     self = [super init];
     
     if (self) {
-        [self setArea:[[dictionary valueForKey:KEY_AREA] doubleValue]];
+        
+        NSString *stringArea = [NSString stringWithFormat:@"%@", [dictionary valueForKey:KEY_AREA]];
+        
+        [self setArea: stringArea.doubleValue > 0 ? stringArea.doubleValue : 0];
         [self setCapital:[dictionary valueForKey:KEY_CAPITAL]];
         [self setName:[dictionary valueForKey:KEY_NAME]];
         [self setNativeName:[dictionary valueForKey:KEY_NATIVENAME]];
@@ -37,19 +40,31 @@
 }
 
 
--(void)downloadJSONFromURLWith:(void (^)(NSArray *, NSString *))completion {
-
-    NSURL *url = [[NSURL alloc] initWithString: API_COUNTRIES];
-    NSURLSession *session = [[NSURLSession alloc] init];
+-(void)downloadJSONFromURLWith:(void (^)(NSArray *array, NSString *error))completion {
     
-    [session dataTaskWithURL: url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    NSMutableArray *result = [[NSMutableArray alloc] init];
+    NSURL *url = [NSURL URLWithString:API_COUNTRIES];
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSURLSessionTask *task = [session dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
-        NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData: data options: NSJSONReadingMutableContainers error: &error];
+        NSError * parseError = nil;
+        NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
         
         if (jsonArray.count > 0) {
+            
             NSLog(@"JSON: %@", jsonArray);
+            
+            for (NSDictionary *json in jsonArray) {
+                Country *country = [[Country alloc] initWithJson:json];
+                [result addObject:country];
+            }
         }
+        
+        completion(result, parseError.localizedDescription);
     }];
+    
+    [task resume];
 }
 
 @end

@@ -18,10 +18,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    Country *c;
+    Country *c = [[Country alloc] init];
     
     [c downloadJSONFromURLWith:^(NSArray *countries, NSString *error) {
-        NSLog(@"count: %d\n error: %@", (int)countries.count, error);
+        NSLog(@"\ncount: %d\nerror: %@\n", (int)countries.count, error);
+        NSLog(@"\nname: %@\narea: %.0f\n", [(Country *)(countries.lastObject) name], [(Country *)(countries.lastObject) area]);
     }];
 }
 
