@@ -57,6 +57,8 @@ UIRefreshControl *refreshControll;
             }
         });
     }];
+    
+    [country downloadJSONFromURLUsingAFNetworkingWith:nil];
 }
 
 -(void)updateUI {

@@ -3,6 +3,7 @@
 
 ### Objective-C
 - Xcode 8.3
+- AFNetworking
 
 ### Swift
 - Swift 3.1

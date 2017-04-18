@@ -7,6 +7,7 @@
 //
 
 #import "Country.h"
+#import <AFNetworking.h>
 
 #define KEY_AREA @"area"
 #define KEY_CAPITAL @"capital"
@@ -50,8 +51,8 @@
     
     NSURLSessionTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
        
-        if (error != NULL) {
-            completion(NULL, error.localizedDescription);
+        if (error) {
+            completion(nil, error.localizedDescription);
             return;
         }
         
@@ -59,8 +60,6 @@
         NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
         
         if (jsonArray.count > 0) {
-            
-            NSLog(@"JSON: %@", jsonArray);
             
             for (NSDictionary *json in jsonArray) {
                 Country *country = [[Country alloc] initWithJson:json];
@@ -72,6 +71,26 @@
     }];
     
     [task resume];
+}
+
+-(void)downloadJSONFromURLUsingAFNetworkingWith:(void (^)(NSArray *, NSString *))completion {
+
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    NSURL *url = [[NSURL alloc] initWithString:API_COUNTRIES];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    NSURLSessionDataTask *dataTask = [manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        
+        if (error) {
+            completion(nil, error.localizedDescription);
+            return;
+        }
+        
+        NSLog(@"\nresponse: %@\nresponse object: %@", response, responseObject);
+    }];
+    
+    [dataTask resume];
 }
 
 @end

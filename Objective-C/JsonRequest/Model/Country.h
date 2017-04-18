@@ -18,7 +18,7 @@
 @property(nonatomic, strong) NSString *region;
 @property(nonatomic, strong) NSString *relevance;
 
--(id)initWithJson: (NSDictionary *)dictionary;
--(void)downloadJSONFromURLWith: (void (^)(NSArray *countries, NSString *error))completion;
+-(void)downloadJSONFromURLWith:(void (^)(NSArray *countries, NSString *error))completion;
+-(void)downloadJSONFromURLUsingAFNetworkingWith:(void (^)(NSArray *countries, NSString *error))completion;
 
 @end

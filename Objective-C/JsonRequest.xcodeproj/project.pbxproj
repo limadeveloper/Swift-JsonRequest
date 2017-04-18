@@ -63,9 +63,9 @@
 			isa = PBXGroup;
 			children = (
 				820772851EA31165000F222E /* JsonRequest */,
-				820772841EA31165000F222E /* Products */,
 				22CE205F751E51488A5F7B28 /* Pods */,
 				CBA3411F289DF587F8989D52 /* Frameworks */,
+				820772841EA31165000F222E /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -93,21 +93,21 @@
 			children = (
 				820772891EA31165000F222E /* AppDelegate.h */,
 				8207728A1EA31165000F222E /* AppDelegate.m */,
-				820772871EA31165000F222E /* main.m */,
 				820772971EA31165000F222E /* Info.plist */,
+				820772871EA31165000F222E /* main.m */,
 				820772921EA31165000F222E /* Assets.xcassets */,
 				CEE7F6CE1EA6594A00DC9D93 /* Global */,
 			);
-			name = Support;
+			path = Support;
 			sourceTree = "<group>";
 		};
 		8207729E1EA311FE000F222E /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				8207728F1EA31165000F222E /* Main.storyboard */,
 				820772941EA31165000F222E /* LaunchScreen.storyboard */,
+				8207728F1EA31165000F222E /* Main.storyboard */,
 			);
-			name = UI;
+			path = UI;
 			sourceTree = "<group>";
 		};
 		8207729F1EA31307000F222E /* Controller */ = {
@@ -116,7 +116,7 @@
 				8207728C1EA31165000F222E /* ViewController.h */,
 				8207728D1EA31165000F222E /* ViewController.m */,
 			);
-			name = Controller;
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		820772A31EA31406000F222E /* Model */ = {
@@ -125,7 +125,7 @@
 				820772A01EA313FF000F222E /* Country.h */,
 				820772A11EA313FF000F222E /* Country.m */,
 			);
-			name = Model;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		CBA3411F289DF587F8989D52 /* Frameworks */ = {
@@ -142,7 +142,7 @@
 				CEE7F6CB1EA6594600DC9D93 /* Global.h */,
 				CEE7F6CC1EA6594600DC9D93 /* Global.m */,
 			);
-			name = Global;
+			path = Global;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,6 +284,7 @@
 				820772901EA31165000F222E /* Base */,
 			);
 			name = Main.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		820772941EA31165000F222E /* LaunchScreen.storyboard */ = {
@@ -292,6 +293,7 @@
 				820772951EA31165000F222E /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -395,7 +397,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = JsonRequest/Info.plist;
+				INFOPLIST_FILE = JsonRequest/Support/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.limadeveloper.tests.ios.jsonrequest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -408,7 +410,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = JsonRequest/Info.plist;
+				INFOPLIST_FILE = JsonRequest/Support/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.limadeveloper.tests.ios.jsonrequest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
