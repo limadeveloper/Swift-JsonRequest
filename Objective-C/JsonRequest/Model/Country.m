@@ -16,6 +16,7 @@
 #define KEY_POPULATION @"population"
 #define KEY_REGION @"region"
 #define KEY_RELEVANCE @"relevance"
+#define KEY_SUBREGION @"subregion"
 #define API_COUNTRIES @"https://restcountries.eu/rest/v1/all"
 
 @implementation Country
@@ -35,6 +36,7 @@
         [self setPopulation:[[dictionary valueForKey:KEY_POPULATION] intValue]];
         [self setRegion:[dictionary valueForKey:KEY_REGION]];
         [self setRelevance:[dictionary valueForKey:KEY_RELEVANCE]];
+        [self setSubregion:[dictionary valueForKey:KEY_SUBREGION]];
     }
     
     return self;

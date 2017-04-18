@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "Country.h"
 #import "Global.h"
+#import "DetailsViewController.h"
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -109,6 +110,18 @@ UIRefreshControl *refreshControll;
 #pragma mark - TableView Delegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self performSegueWithIdentifier:SEGUE_DETAILS sender:indexPath];
+}
+
+#pragma mark - Navigation
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqual:SEGUE_DETAILS]) {
+        if ((NSIndexPath *)sender) {
+            NSIndexPath *indexPath = sender;
+            DetailsViewController *controller = segue.destinationViewController;
+            [controller setCountry:[countries objectAtIndex:indexPath.row]];
+        }
+    }
 }
 
 @end

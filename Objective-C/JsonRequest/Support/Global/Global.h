@@ -9,9 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+// -- Texts
 #define TEXT_OK @"Ok"
 #define TEXT_ALERT @"Alert"
 #define TEXT_ERROR @"Error"
+#define TEXT_NO_DATA @"No data";
+// -- Segues
+#define SEGUE_DETAILS @"Details"
 
 @interface Global : NSObject
 

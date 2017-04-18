@@ -17,6 +17,7 @@
 @property(nonatomic, assign) int population;
 @property(nonatomic, strong) NSString *region;
 @property(nonatomic, strong) NSString *relevance;
+@property(nonatomic, strong) NSString *subregion;
 
 -(void)downloadJSONFromURLWith:(void (^)(NSArray *countries, NSString *error))completion;
 -(void)downloadJSONFromURLUsingAFNetworkingWith:(void (^)(NSArray *countries, NSString *error))completion;
