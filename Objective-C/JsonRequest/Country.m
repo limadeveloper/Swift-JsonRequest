@@ -39,14 +39,21 @@
     return self;
 }
 
-
 -(void)downloadJSONFromURLWith:(void (^)(NSArray *array, NSString *error))completion {
     
     NSMutableArray *result = [[NSMutableArray alloc] init];
     NSURL *url = [NSURL URLWithString:API_COUNTRIES];
     NSURLSession *session = [NSURLSession sharedSession];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:15];
     
-    NSURLSessionTask *task = [session dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    NSLog(@"url: %@", url);
+    
+    NSURLSessionTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+       
+        if (error != NULL) {
+            completion(NULL, error.localizedDescription);
+            return;
+        }
         
         NSError * parseError = nil;
         NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];

@@ -10,6 +10,9 @@
 
 @interface ViewController : UIViewController
 
+#pragma mark - Properties
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *countButton;
 
 @end
 
