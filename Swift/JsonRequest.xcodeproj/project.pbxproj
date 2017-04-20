@@ -175,6 +175,7 @@
 				TargetAttributes = {
 					F1E9FB6B1BFC17DD0067EAB2 = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = G9572JBENB;
 						LastSwiftMigration = 0830;
 					};
 				};
@@ -387,7 +388,7 @@
 			baseConfigurationReference = 9D530DD14DD8EB5FC113B039 /* Pods-JsonRequest.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = G9572JBENB;
 				INFOPLIST_FILE = JsonRequest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.limadeveloper.tests.ios.jsonrequest;
@@ -401,7 +402,7 @@
 			baseConfigurationReference = 834E6088C26F55FC9E9001A0 /* Pods-JsonRequest.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = G9572JBENB;
 				INFOPLIST_FILE = JsonRequest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.limadeveloper.tests.ios.jsonrequest;
